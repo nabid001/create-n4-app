@@ -1,0 +1,42 @@
+{
+  "name": "create-n4-app",
+  "version": "0.0.30",
+  "description": "Nothing is here for read",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node ./dist/index.js"
+  },
+  "bin": {
+    "create-n4-app": "./dist/index.js"
+  },
+  "files": [
+    "template",
+    "dist"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@clerk/nextjs": "^6.12.5",
+    "@types/react": "^19.0.10",
+    "typescript": "^5.8.2"
+  },
+  "engines": {
+    "node": ">=14.16"
+  },
+  "dependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.13.10",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "execa": "^9.5.2",
+    "fs-extra": "^11.3.0",
+    "inquirer": "^12.4.3",
+    "mongoose": "^8.12.1",
+    "ora": "^8.2.0",
+    "prompt": "^1.3.0",
+    "ts-node": "^10.9.2"
+  }
+}
