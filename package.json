@@ -1,6 +1,6 @@
 {
   "name": "create-n4-app",
-  "version": "0.0.30",
+  "version": "1.4.33",
   "description": "Nothing is here for read",
   "main": "./dist/index.js",
   "scripts": {
@@ -20,8 +20,18 @@
   "type": "module",
   "devDependencies": {
     "@clerk/nextjs": "^6.12.5",
+    "@eslint/js": "^9.22.0",
+    "@neondatabase/serverless": "^0.10.4",
     "@types/react": "^19.0.10",
-    "typescript": "^5.8.2"
+    "dotenv": "^16.4.7",
+    "drizzle-kit": "^0.30.5",
+    "drizzle-orm": "^0.40.1",
+    "eslint": "^9.22.0",
+    "globals": "^16.0.0",
+    "next-auth": "^5.0.0-beta.25",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.1"
   },
   "engines": {
     "node": ">=14.16"

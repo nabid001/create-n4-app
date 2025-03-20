@@ -8,11 +8,21 @@ import CreateNextApp from "./helper/installer/CreateNextApp.js";
 import ClerkInstaller from "./helper/installer/ClerkInstaller.js";
 import MongoDBInstaller from "./helper/installer/MongoDBInstaller.js";
 import process from "process";
+import CredentialsInstaller from "./helper/installer/CredentialsInstaller.js";
+import OAuthInstaller from "./helper/installer/OAuthInstaller.js";
+import DrizzleInstaller from "./helper/installer/DrizzleInstaller.js";
 
 const program = new Command();
 
 const createN4App = async () => {
-  const { projectName, authType, useAuth, database, selectDatabase } = Input;
+  const {
+    projectName,
+    authType,
+    useAuth,
+    authenticationType,
+    database,
+    selectDatabase,
+  } = Input;
 
   const existedFile = await fs.pathExists(projectName);
   if (existedFile) {
@@ -20,27 +30,37 @@ const createN4App = async () => {
     process.exit(1);
   }
 
-  // Create Next.js project
   await CreateNextApp(projectName);
 
-  // Change directory to the project directory
   process.chdir(projectName);
 
-  // Add Authentication
   if (useAuth === true && authType === "Clerk") {
-    // Install Clerk
-    await ClerkInstaller({ projectName });
+    await ClerkInstaller();
   } else if (useAuth && authType === "Auth.js") {
-    // Implement Auth.js installation logic here
+    switch (authenticationType) {
+      case "Credentials":
+        await CredentialsInstaller();
+        break;
+      case "OAuth":
+        await OAuthInstaller();
+        break;
+    }
   }
 
   if (database) {
-    if (selectDatabase === "MongoDB") {
-      await MongoDBInstaller({ projectName });
+    switch (selectDatabase) {
+      case "MongoDB":
+        await MongoDBInstaller();
+        break;
+      case "Drizzle":
+        await DrizzleInstaller();
+        break;
     }
   }
+
+  console.log(chalk.green(`✅ Setup Completed!`));
 };
 
-program.version("0.0.30").name("CREATE_N4_APP").action(createN4App);
+program.version("1.4.33").name("CREATE_N4_APP").action(createN4App);
 
 program.parse(process.argv);
