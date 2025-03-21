@@ -3,9 +3,8 @@ import fs from "fs-extra";
 import path from "path";
 import { PKG_ROOT } from "../../utils/consts.js";
 
-const MongoDBInstaller = async ({ projectName }: { projectName: string }) => {
-  // const projectDir = path.resolve(process.cwd(), projectName);
-  console.log("🚀 Installing MongoDB...");
+const MongoDBInstaller = async () => {
+  console.log("\n☕ Installing Mongodb...");
 
   await execa("npm", ["i", "mongoose", "mongodb"], {
     stdio: "inherit",
@@ -25,7 +24,6 @@ const MongoDBInstaller = async ({ projectName }: { projectName: string }) => {
       await fs.appendFile(path.join("./", ".env.local"), "\nMONGODB_URL=");
     }
   }
-  console.log("✅ MongoDB installed successfully");
 };
 
 export default MongoDBInstaller;

@@ -3,10 +3,9 @@ import chalk from "chalk";
 import fs from "fs-extra";
 import path from "path";
 import { PKG_ROOT } from "../../utils/consts.js";
-import { cwd } from "process";
 
-const ClerkInstaller = async ({ projectName }: { projectName: string }) => {
-  console.log(`${chalk.green("🚀 Installing Clerk...")}`);
+const ClerkInstaller = async () => {
+  console.log("☕ Installing Clerk...");
   await execa("npm", ["install", "@clerk/nextjs"], {
     stdio: "inherit",
   });
@@ -43,8 +42,6 @@ const ClerkInstaller = async ({ projectName }: { projectName: string }) => {
     path.join(PKG_ROOT, "clerk", ".env.local"),
     path.join(process.cwd(), ".env.local")
   );
-
-  console.log(`\n${chalk.green("✅ Clerk setup complete!")}`);
 };
 
 export default ClerkInstaller;
