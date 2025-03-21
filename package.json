@@ -1,7 +1,11 @@
 {
   "name": "create-n4-app",
-  "version": "1.4.33",
-  "description": "Nothing is here for read",
+  "version": "1.4.36",
+  "description": "Create Next.js app with the n4 stack",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nabid001/create-n4-app"
+  },
   "main": "./dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -14,9 +18,17 @@
     "template",
     "dist"
   ],
-  "keywords": [],
+  "keywords": [
+    "create-n4-app",
+    "next.js",
+    "cli",
+    "create-app",
+    "typescript",
+    "clerk",
+    "auth"
+  ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "type": "module",
   "devDependencies": {
     "@clerk/nextjs": "^6.12.5",

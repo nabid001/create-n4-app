@@ -42,8 +42,6 @@ const ClerkInstaller = async () => {
     path.join(PKG_ROOT, "clerk", ".env.local"),
     path.join(process.cwd(), ".env.local")
   );
-
-  console.log(`\n${chalk.yellow("Don't forget to add API keys")}`);
 };
 
 export default ClerkInstaller;

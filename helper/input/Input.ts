@@ -7,6 +7,7 @@ type InputTypes = {
   authenticationType: "Credentials" | "OAuth";
   database: boolean;
   selectDatabase: "MongoDB" | "Drizzle";
+  databaseType: "Neon(PostgreSQL)";
 };
 
 const Input: InputTypes = await inquirer.prompt([
@@ -48,6 +49,13 @@ const Input: InputTypes = await inquirer.prompt([
     message: "What database ORM would you like to use?",
     choices: ["MongoDB", "Drizzle"],
     when: (answer) => answer.database,
+  },
+  {
+    type: "select",
+    name: "databaseType",
+    message: "Which type of database would you like to use?",
+    choices: ["Neon(PostgreSQL)"],
+    when: (answer) => answer.database && answer.selectDatabase === "Drizzle",
   },
 ]);
 

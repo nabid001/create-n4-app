@@ -24,7 +24,6 @@ const MongoDBInstaller = async () => {
       await fs.appendFile(path.join("./", ".env.local"), "\nMONGODB_URL=");
     }
   }
-  console.log("✅ MongoDB installed successfully");
 };
 
 export default MongoDBInstaller;

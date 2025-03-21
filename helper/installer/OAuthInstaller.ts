@@ -51,11 +51,6 @@ const OAuthInstaller = async () => {
       );
     }
   }
-
-  console.log("\n☕ Auth.js installed successfully.");
-  console.log(
-    chalk.yellow("\n Don't forget to add callback URL and env variables")
-  );
 };
 
 export default OAuthInstaller;

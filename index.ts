@@ -22,6 +22,7 @@ const createN4App = async () => {
     authenticationType,
     database,
     selectDatabase,
+    databaseType,
   } = Input;
 
   const existedFile = await fs.pathExists(projectName);
@@ -53,14 +54,19 @@ const createN4App = async () => {
         await MongoDBInstaller();
         break;
       case "Drizzle":
-        await DrizzleInstaller();
+        switch (databaseType) {
+          case "Neon(PostgreSQL)":
+            await DrizzleInstaller();
+            break;
+        }
         break;
     }
   }
 
+  console.log(chalk.yellowBright("Don't forget to add Environment variables"));
   console.log(chalk.green(`✅ Setup Completed!`));
 };
 
-program.version("1.4.33").name("CREATE_N4_APP").action(createN4App);
+program.version("1.4.36").name("CREATE_N4_APP").action(createN4App);
 
 program.parse(process.argv);

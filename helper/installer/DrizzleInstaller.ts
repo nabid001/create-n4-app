@@ -40,8 +40,6 @@ const DrizzleInstaller = async () => {
 
   // Write the modified package.json back
   await fs.writeJson("./package.json", packageJson, { spaces: 2 });
-
-  console.log(chalk.yellow("Don't forget to add Environment variables"));
 };
 
 export default DrizzleInstaller;

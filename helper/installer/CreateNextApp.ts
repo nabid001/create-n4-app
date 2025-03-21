@@ -2,8 +2,6 @@ import chalk from "chalk";
 import { execa } from "execa";
 
 const CreateNextApp = async (projectName: string) => {
-  console.log(`\n${chalk.green("🚀 Creating Next.js project...")}`);
-
   await execa(
     "npx",
     [
