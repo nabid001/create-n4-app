@@ -68,6 +68,10 @@ After installation, you'll need to set up environment variables for your selecte
 
 Contributions are welcome! Feel free to open issues or submit pull requests.
 
+## Inspiration
+
+I named my CLI project after Theo's `create-t3-app`
+
 ## License
 
 MIT
