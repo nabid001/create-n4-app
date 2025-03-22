@@ -1,7 +1,11 @@
+import { spinner } from "@clack/prompts";
 import chalk from "chalk";
 import { execa } from "execa";
 
 const CreateNextApp = async (projectName: string) => {
+  const s = spinner();
+  s.start("Generating project files...");
+
   await execa(
     "npx",
     [
@@ -16,9 +20,10 @@ const CreateNextApp = async (projectName: string) => {
       "--no-import-alias",
     ],
     {
-      stdio: "inherit",
+      stderr: "inherit",
     }
   );
+  s.stop("Project created successfully! 🎉");
 };
 
 export default CreateNextApp;

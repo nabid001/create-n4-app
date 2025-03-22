@@ -67,6 +67,6 @@ const createN4App = async () => {
   console.log(chalk.green(`✅ Setup Completed!`));
 };
 
-program.version("1.4.36").name("CREATE_N4_APP").action(createN4App);
+program.version("1.4.37").name("CREATE_N4_APP").action(createN4App);
 
 program.parse(process.argv);

@@ -1,15 +1,15 @@
 {
   "name": "create-n4-app",
-  "version": "1.4.36",
+  "version": "1.4.37",
   "description": "Create Next.js app with the n4 stack",
+  "main": "./dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/nabid001/create-n4-app"
   },
-  "main": "./dist/index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node ./dist/index.js"
+    "dev": "node ./dist/index.js"
   },
   "bin": {
     "create-n4-app": "./dist/index.js"
@@ -49,6 +49,7 @@
     "node": ">=14.16"
   },
   "dependencies": {
+    "@clack/prompts": "^0.10.0",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.13.10",
     "chalk": "^5.4.1",

@@ -15,7 +15,7 @@ const Input: InputTypes = await inquirer.prompt([
     type: "input",
     name: "projectName",
     message: "Enter project name:",
-    default: "my-next-app",
+    default: "my-app",
   },
   {
     type: "confirm",
