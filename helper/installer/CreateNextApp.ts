@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import { execa } from "execa";
 
 const CreateNextApp = async (projectName: string) => {
@@ -16,7 +15,7 @@ const CreateNextApp = async (projectName: string) => {
       "--no-import-alias",
     ],
     {
-      stdio: "inherit",
+      stderr: "inherit",
     }
   );
 };

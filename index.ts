@@ -11,19 +11,21 @@ import process from "process";
 import CredentialsInstaller from "./helper/installer/CredentialsInstaller.js";
 import OAuthInstaller from "./helper/installer/OAuthInstaller.js";
 import DrizzleInstaller from "./helper/installer/DrizzleInstaller.js";
+import { outro, spinner } from "@clack/prompts";
 
+const s = spinner();
 const program = new Command();
 
 const createN4App = async () => {
   const {
     projectName,
-    authType,
     useAuth,
-    authenticationType,
+    authType,
     database,
-    selectDatabase,
     databaseType,
-  } = Input;
+    authenticationType,
+    selectDatabase,
+  } = await Input();
 
   const existedFile = await fs.pathExists(projectName);
   if (existedFile) {
@@ -31,7 +33,9 @@ const createN4App = async () => {
     process.exit(1);
   }
 
+  s.start(chalk.bold("☕ Installing Next.js and dependencies"));
   await CreateNextApp(projectName);
+  s.stop();
 
   process.chdir(projectName);
 
@@ -63,8 +67,11 @@ const createN4App = async () => {
     }
   }
 
-  console.log(chalk.yellowBright("Don't forget to add Environment variables"));
-  console.log(chalk.green(`✅ Setup Completed!`));
+  outro(
+    `✅ Setup complete. ${chalk.yellowBright(
+      "Don't forget to add Environment Variables"
+    )}`
+  );
 };
 
 program.version("1.4.36").name("CREATE_N4_APP").action(createN4App);
