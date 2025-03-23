@@ -12,9 +12,6 @@ import CredentialsInstaller from "./helper/installer/CredentialsInstaller.js";
 import OAuthInstaller from "./helper/installer/OAuthInstaller.js";
 import DrizzleInstaller from "./helper/installer/DrizzleInstaller.js";
 import { outro, spinner } from "@clack/prompts";
-import path from "path";
-import { PKG_ROOT, PKG_ROOTS } from "./utils/consts.js";
-import { type PackageJson } from "type-fest";
 import { getVersion } from "./utils/getVersion.js";
 
 const s = spinner();
@@ -78,7 +75,6 @@ const createN4App = async () => {
   );
 };
 
-program.version("1.4.37").name("CREATE_N4_APP").action(createN4App);
 program
   .version(getVersion(), "-v, --version", "Display the version number")
   .name("CREATE_N4_APP")
