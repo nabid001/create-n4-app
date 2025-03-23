@@ -1,62 +1,101 @@
-import inquirer from "inquirer";
+import { text, select, confirm } from "@clack/prompts";
+import color from "picocolors";
+import figlet from "figlet";
+import gradient from "gradient-string";
 
 type InputTypes = {
   projectName: string;
   useAuth: boolean;
-  authType: "Clerk" | "Auth.js";
-  authenticationType: "Credentials" | "OAuth";
+  authType?: "Clerk" | "Auth.js";
+  authenticationType?: "Credentials" | "OAuth";
   database: boolean;
-  selectDatabase: "MongoDB" | "Drizzle";
-  databaseType: "Neon(PostgreSQL)";
+  selectDatabase?: "MongoDB" | "Drizzle";
+  databaseType?: "Neon(PostgreSQL)";
 };
 
-const Input: InputTypes = await inquirer.prompt([
-  {
-    type: "input",
-    name: "projectName",
-    message: "Enter project name:",
-    default: "my-app",
-  },
-  {
-    type: "confirm",
-    name: "useAuth",
-    message: "Do you want to add Authentication?",
-    default: true,
-  },
-  {
-    type: "list",
-    name: "authType",
-    message: "What authentication provider would you like to use?",
-    choices: ["Clerk", "Auth.js"],
-    when: (answer) => answer.useAuth,
-  },
-  {
-    type: "select",
-    name: "authenticationType",
-    message: "Which authentication method would you like to use?",
-    choices: ["Credentials", "OAuth"],
-    when: (answer) => answer.useAuth && answer.authType === "Auth.js",
-  },
-  {
-    type: "confirm",
-    name: "database",
-    message: "Would you like to add Database?",
-    default: true,
-  },
-  {
-    type: "list",
-    name: "selectDatabase",
-    message: "What database ORM would you like to use?",
-    choices: ["MongoDB", "Drizzle"],
-    when: (answer) => answer.database,
-  },
-  {
-    type: "select",
-    name: "databaseType",
-    message: "Which type of database would you like to use?",
-    choices: ["Neon(PostgreSQL)"],
-    when: (answer) => answer.database && answer.selectDatabase === "Drizzle",
-  },
-]);
+async function Input(): Promise<InputTypes> {
+  console.clear();
+  const banner = figlet.textSync("CREATE N4 APP");
+  console.log(gradient.vice.multiline(banner));
+
+  const projectName = String(
+    await text({
+      message: color.bold("What will your project be called?"),
+      validate: (value: string) =>
+        value.trim() ? undefined : "Project name cannot be empty",
+    })
+  );
+
+  const useAuth = Boolean(
+    await confirm({
+      message: color.bold("Do you want to add Authentication?"),
+      initialValue: true,
+    })
+  );
+
+  let authType;
+  let authenticationType;
+
+  if (useAuth) {
+    authType = (await select({
+      message: color.bold(
+        "What authentication provider would you like to use?"
+      ),
+      options: [
+        { value: "Clerk", label: "Clerk" },
+        { value: "Auth.js", label: "Auth.js" },
+      ],
+    })) as "Clerk" | "Auth.js" | undefined;
+
+    if (authType === "Auth.js") {
+      authenticationType = (await select({
+        message: color.bold(
+          "Which authentication method would you like to use?"
+        ),
+        options: [
+          { value: "Credentials", label: "Credentials" },
+          { value: "OAuth", label: "OAuth" },
+        ],
+      })) as "Credentials" | "OAuth" | undefined;
+    }
+  }
+
+  const database = Boolean(
+    await confirm({
+      message: color.bold("Would you like to add a Database?"),
+      initialValue: true,
+    })
+  );
+
+  let selectDatabase;
+  let databaseType;
+
+  if (database) {
+    selectDatabase = (await select({
+      message: color.bold("What database ORM would you like to use?"),
+      options: [
+        { value: "MongoDB", label: "MongoDB" },
+        { value: "Drizzle", label: "Drizzle" },
+      ],
+    })) as "MongoDB" | "Drizzle" | undefined;
+
+    if (selectDatabase === "Drizzle") {
+      databaseType = (await select({
+        message: color.bold("Which type of database would you like to use?"),
+        options: [{ value: "Neon(PostgreSQL)", label: "Neon(PostgreSQL)" }],
+      })) as "Neon(PostgreSQL)" | undefined;
+    }
+  }
+
+  return {
+    projectName,
+    useAuth,
+    authType,
+    authenticationType,
+    database,
+    selectDatabase,
+    databaseType,
+  };
+}
 
 export default Input;

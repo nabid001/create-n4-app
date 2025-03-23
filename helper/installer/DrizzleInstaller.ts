@@ -3,16 +3,17 @@ import { execa } from "execa";
 import path from "path";
 import { PKG_ROOT } from "../../utils/consts.js";
 import chalk from "chalk";
+import { spinner } from "@clack/prompts";
 
 const DrizzleInstaller = async () => {
-  console.log("\n☕ Installing Drizzle...");
+  console.log(chalk.bold("☕ Installing Drizzle..."));
 
   await execa(
     "npm",
     ["i", "drizzle-orm", "@neondatabase/serverless", "dotenv"],
-    { stdio: "inherit" }
+    { stderr: "inherit" }
   );
-  await execa("npm", ["i", "-D", "drizzle-kit", "tsx"], { stdio: "inherit" });
+  await execa("npm", ["i", "-D", "drizzle-kit", "tsx"], { stderr: "inherit" });
 
   const existingEnv = await fs.exists(".env.local");
 

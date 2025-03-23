@@ -1,17 +1,17 @@
-import fs from "fs-extra";
-import { execa } from "execa";
-import path from "path";
 import { PKG_ROOT } from "../../utils/consts.js";
+import { execa } from "execa";
+import fs from "fs-extra";
+import path from "path";
 import chalk from "chalk";
 
 const OAuthInstaller = async () => {
-  console.log("\n☕ Auth.js installing...");
+  console.log(chalk.bold("☕ Installing Auth.js..."));
 
   await execa("npm", ["i", "next-auth@beta"], {
-    stdio: "inherit",
+    stderr: "inherit",
   });
   await execa("npx", ["auth", "secret"], {
-    stdio: "inherit",
+    stderr: "inherit",
   });
 
   const oAuthTemplateDir = path.join(PKG_ROOT, "authjs", "oAuth");

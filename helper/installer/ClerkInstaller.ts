@@ -1,13 +1,13 @@
 import { execa } from "execa";
-import chalk from "chalk";
-import fs from "fs-extra";
-import path from "path";
 import { PKG_ROOT } from "../../utils/consts.js";
+import fs from "fs-extra";
+import chalk from "chalk";
+import path from "path";
 
 const ClerkInstaller = async () => {
-  console.log("☕ Installing Clerk...");
+  console.log(chalk.bold("☕ Installing Clerk..."));
   await execa("npm", ["install", "@clerk/nextjs"], {
-    stdio: "inherit",
+    stderr: "inherit",
   });
 
   // Check if middleware exists and copy if it doesn't

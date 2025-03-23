@@ -2,12 +2,14 @@ import { execa } from "execa";
 import fs from "fs-extra";
 import path from "path";
 import { PKG_ROOT } from "../../utils/consts.js";
+import { spinner } from "@clack/prompts";
+import chalk from "chalk";
 
 const MongoDBInstaller = async () => {
-  console.log("\n☕ Installing Mongodb...");
+  console.log(chalk.bold("☕ Installing MongoDB..."));
 
   await execa("npm", ["i", "mongoose", "mongodb"], {
-    stdio: "inherit",
+    stderr: "inherit",
   });
 
   await fs.copy(path.join(PKG_ROOT, "mongodb"), "./");
