@@ -1,6 +1,6 @@
 {
   "name": "create-n4-app",
-  "version": "2.4.36",
+  "version": "2.4.46",
   "description": "Create Next.js app with the n4 stack",
   "main": "./dist/index.js",
   "repository": {

@@ -1,19 +1,24 @@
 import fs from "fs-extra";
-import { execa } from "execa";
 import path from "path";
-import { PKG_ROOT } from "../../utils/consts.js";
+import { TEMPLATE_PKG } from "../../utils/consts.js";
 import chalk from "chalk";
-import { spinner } from "@clack/prompts";
+import { PackageManger } from "../../utils/getUserPackageManager.js";
+import { packageInstaller } from "../../utils/packageInstaller.js";
 
-const DrizzleInstaller = async () => {
+const DrizzleInstaller = async (packageManger: PackageManger) => {
   console.log(chalk.bold("☕ Installing Drizzle..."));
 
-  await execa(
-    "npm",
-    ["i", "drizzle-orm", "@neondatabase/serverless", "dotenv"],
-    { stderr: "inherit" }
-  );
-  await execa("npm", ["i", "-D", "drizzle-kit", "tsx"], { stderr: "inherit" });
+  await packageInstaller({
+    packageManger: packageManger.depn,
+    installCmd: packageManger.depn === "npm" ? "i" : "add",
+    packages: ["drizzle-orm", "@neondatabase/serverless", "dotenv"],
+  });
+
+  await packageInstaller({
+    packageManger: packageManger.depn,
+    installCmd: packageManger.depn === "npm" ? "i" : "add",
+    packages: ["-D", "drizzle-kit", "tsx"],
+  });
 
   const existingEnv = await fs.exists(".env.local");
 
@@ -26,7 +31,7 @@ const DrizzleInstaller = async () => {
     }
   }
 
-  await fs.copy(path.join(PKG_ROOT, "drizzle"), path.join("./"));
+  await fs.copy(path.join(TEMPLATE_PKG, "drizzle"), path.join("./"));
 
   const packageJson = await fs.readJson("./package.json");
 

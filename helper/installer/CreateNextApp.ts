@@ -1,13 +1,12 @@
-import { spinner } from "@clack/prompts";
-import chalk from "chalk";
 import { execa } from "execa";
+import { PackageManger } from "../../utils/getUserPackageManager.js";
 
-const CreateNextApp = async (projectName: string) => {
-  const s = spinner();
-  s.start("Generating project files...");
-
+const CreateNextApp = async (
+  projectName: string,
+  packageManger: PackageManger
+) => {
   await execa(
-    "npx",
+    packageManger?.nextIns,
     [
       "create-next-app@latest",
       projectName,
@@ -23,7 +22,6 @@ const CreateNextApp = async (projectName: string) => {
       stderr: "inherit",
     }
   );
-  s.stop("Project created successfully! 🎉");
 };
 
 export default CreateNextApp;

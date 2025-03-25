@@ -1,18 +1,20 @@
-import { execa } from "execa";
 import fs from "fs-extra";
 import path from "path";
-import { PKG_ROOT } from "../../utils/consts.js";
-import { spinner } from "@clack/prompts";
+import { TEMPLATE_PKG } from "../../utils/consts.js";
 import chalk from "chalk";
+import { PackageManger } from "../../utils/getUserPackageManager.js";
+import { packageInstaller } from "../../utils/packageInstaller.js";
 
-const MongoDBInstaller = async () => {
+const MongoDBInstaller = async (packageManger: PackageManger) => {
   console.log(chalk.bold("☕ Installing MongoDB..."));
 
-  await execa("npm", ["i", "mongoose", "mongodb"], {
-    stderr: "inherit",
+  await packageInstaller({
+    packageManger: packageManger.depn,
+    installCmd: packageManger.depn === "npm" ? "i" : "add",
+    packages: ["mongoose", "mongodb"],
   });
 
-  await fs.copy(path.join(PKG_ROOT, "mongodb"), "./");
+  await fs.copy(path.join(TEMPLATE_PKG, "mongodb"), "./");
 
   const existingEnv = await fs.pathExists(path.join("./", ".env.local"));
   if (!existingEnv) {

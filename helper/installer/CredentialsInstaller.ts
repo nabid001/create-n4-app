@@ -1,20 +1,29 @@
-import { execa } from "execa";
-import { PKG_ROOT } from "../../utils/consts.js";
+import { TEMPLATE_PKG } from "../../utils/consts.js";
 import fs from "fs-extra";
 import path from "path";
 import chalk from "chalk";
+import { PackageManger } from "../../utils/getUserPackageManager.js";
+import {
+  createOAuthSecret,
+  packageInstaller,
+} from "../../utils/packageInstaller.js";
 
-const CredentialsInstaller = async () => {
+const CredentialsInstaller = async (packageManger: PackageManger) => {
   console.log(chalk.bold("☕ Installing Auth.js..."));
 
-  await execa("npm", ["i", "next-auth@beta"], {
-    stderr: "inherit",
-  });
-  await execa("npx", ["auth", "secret"], {
-    stderr: "inherit",
+  await packageInstaller({
+    packageManger: packageManger.depn,
+    installCmd: packageManger.depn === "npm" ? "i" : "add",
+    packages: ["next-auth@beta"],
   });
 
-  const credentialsTemplateDir = path.join(PKG_ROOT, "authjs", "credentials");
+  await createOAuthSecret(packageManger);
+
+  const credentialsTemplateDir = path.join(
+    TEMPLATE_PKG,
+    "authjs",
+    "credentials"
+  );
 
   await fs.copy(
     path.join(credentialsTemplateDir, "route"),

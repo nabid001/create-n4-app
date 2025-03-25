@@ -13,6 +13,7 @@ import OAuthInstaller from "./helper/installer/OAuthInstaller.js";
 import DrizzleInstaller from "./helper/installer/DrizzleInstaller.js";
 import { outro, spinner } from "@clack/prompts";
 import { getVersion } from "./utils/getVersion.js";
+import { getUserPackageName } from "./utils/getUserPackageManager.js";
 
 const s = spinner();
 const program = new Command();
@@ -27,28 +28,33 @@ const createN4App = async () => {
     authenticationType,
     selectDatabase,
   } = await Input();
-
+  const packageManager = getUserPackageName();
   const existedFile = await fs.pathExists(projectName);
+
   if (existedFile) {
     console.error(chalk.red(`❌ Project '${projectName}' already exists!`));
     process.exit(1);
   }
+  // consoling the package manager
+  console.log(chalk.bold.yellow(packageManager?.depn));
 
+  // Install Next.js
   s.start(chalk.bold("☕ Installing Next.js and dependencies"));
-  await CreateNextApp(projectName);
+  await CreateNextApp(projectName, packageManager);
   s.stop();
 
+  // Redirect to the project folder
   process.chdir(projectName);
 
   if (useAuth === true && authType === "Clerk") {
-    await ClerkInstaller();
+    await ClerkInstaller(packageManager);
   } else if (useAuth && authType === "Auth.js") {
     switch (authenticationType) {
       case "Credentials":
-        await CredentialsInstaller();
+        await CredentialsInstaller(packageManager);
         break;
       case "OAuth":
-        await OAuthInstaller();
+        await OAuthInstaller(packageManager);
         break;
     }
   }
@@ -56,12 +62,12 @@ const createN4App = async () => {
   if (database) {
     switch (selectDatabase) {
       case "MongoDB":
-        await MongoDBInstaller();
+        await MongoDBInstaller(packageManager);
         break;
       case "Drizzle":
         switch (databaseType) {
           case "Neon(PostgreSQL)":
-            await DrizzleInstaller();
+            await DrizzleInstaller(packageManager);
             break;
         }
         break;

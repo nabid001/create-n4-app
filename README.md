@@ -9,7 +9,7 @@ A CLI tool to bootstrap Next.js applications with the N4 stack configurations, i
 
 `create-n4-app` allows you to quickly set up a Next.js project with various [authentication providers](#authentication) (Clerk, Auth.js) and [database options](#database-integration) (MongoDB, Drizzle with PostgreSQL), tailored to your specific needs through an interactive CLI.
 
-> **Note**: This CLI tool is only available as an NPM package.
+> **Note**: This CLI tool is only available for `NPM` and `Bun` package.
 
 ## Installation
 
@@ -17,18 +17,20 @@ A CLI tool to bootstrap Next.js applications with the N4 stack configurations, i
 npm install -g create-n4-app
 ```
 
-Or use it directly with npx:
-
-```bash
-npx create-n4-app
-```
-
 ## Usage
 
 Run the command and follow the interactive prompts:
 
+### npm
+
 ```bash
-npx create-n4-app@latest
+npm create n4-app@latest
+```
+
+### bun
+
+```bash
+bun create n4-app@latest
 ```
 
 The CLI will guide you through the setup process, asking you to:
@@ -71,7 +73,3 @@ Contributions are welcome! Feel free to open issues or submit pull requests.
 ## Inspiration
 
 I named my CLI project after Theo's `create-t3-app`
-
-## License
-
-MIT
